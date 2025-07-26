@@ -258,7 +258,7 @@ function App() {
               <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
                 <FileSpreadsheet className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">DocConverter Pro</h1>
+              <h1 className="text-2xl font-bold text-gray-900">DocToData</h1>
             </div>
             <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium">
               Get Started
@@ -417,8 +417,83 @@ function App() {
         </div>
       </section>
 
+      {/* Upcoming Features Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-indigo-50 to-purple-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+              <Clock className="w-4 h-4" />
+              Coming Soon
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Exciting Features on the Horizon</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We're constantly innovating to make your document conversion experience even better
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-bl-full opacity-10"></div>
+              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+                <FileSpreadsheet className="w-6 h-6 text-green-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Multi-Format Export</h3>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Export directly to Google Sheets, Excel, CSV, or QuickBooks. One-click integration with your favorite tools.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium">Google Sheets</span>
+                <span className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium">Excel</span>
+                <span className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium">QuickBooks</span>
+              </div>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-bl-full opacity-10"></div>
+              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                <Users className="w-6 h-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Batch Processing</h3>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Upload hundreds of documents at once. Perfect for high-volume processing and enterprise workflows.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">High Volume</span>
+                <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">Enterprise</span>
+              </div>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-bl-full opacity-10"></div>
+              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
+                <Zap className="w-6 h-6 text-purple-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Advanced Features</h3>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                API access, custom templates, automated workflows, and many more powerful features coming soon.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">API Access</span>
+                <span className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">Templates</span>
+                <span className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">Automation</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-6">Want to be the first to know when these features launch?</p>
+            <button 
+              onClick={() => document.querySelector('#email-section')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              Join the Waitlist
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* Email Collection Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-indigo-600">
+      <section id="email-section" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-indigo-600">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
             <Mail className="w-16 h-16 text-white mx-auto mb-6" />
@@ -503,7 +578,7 @@ function App() {
                 <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
                   <FileSpreadsheet className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold">DocConverter Pro</h3>
+                <h3 className="text-2xl font-bold">DocToData</h3>
               </div>
               <p className="text-gray-400 leading-relaxed mb-6">
                 The most advanced PDF to Excel converter and image to Excel converter. 
@@ -541,7 +616,7 @@ function App() {
           </div>
           
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 DocConverter Pro. All rights reserved. The ultimate PDF to Excel converter and bank statement to Excel converter.</p>
+            <p>&copy; 2025 DocToData. All rights reserved. The ultimate PDF to Excel converter and bank statement to Excel converter.</p>
           </div>
         </div>
       </footer>
