@@ -6,6 +6,8 @@ interface UploadState {
   uploading: boolean;
   result: string | null;
   error: string | null;
+  columns: string[];
+  showColumnInput: boolean;
 }
 
 function App() {
@@ -13,27 +15,38 @@ function App() {
     file: null,
     uploading: false,
     result: null,
-    error: null
+    error: null,
+    columns: [],
+    showColumnInput: false
   });
 
   const [normalUpload, setNormalUpload] = useState<UploadState>({
     file: null,
     uploading: false,
     result: null,
-    error: null
+    error: null,
+    columns: [],
+    showColumnInput: false
   });
 
   const [email, setEmail] = useState('');
   const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [newColumn, setNewColumn] = useState('');
 
   const handleFileUpload = async (file: File, type: 'llm' | 'normal') => {
     const setState = type === 'llm' ? setLlmUpload : setNormalUpload;
+    const state = type === 'llm' ? llmUpload : normalUpload;
     
     setState(prev => ({ ...prev, file, uploading: true, error: null, result: null }));
 
     try {
       const formData = new FormData();
       formData.append('file', file);
+      
+      // Add column specifications for LLM conversion
+      if (type === 'llm' && state.columns.length > 0) {
+        formData.append('columns', JSON.stringify(state.columns));
+      }
 
       // Replace with your actual API endpoints
       const endpoint = type === 'llm' ? '/api/llm-convert' : '/api/normal-convert';
@@ -58,6 +71,32 @@ function App() {
     }
   };
 
+  const addColumn = (type: 'llm' | 'normal') => {
+    if (!newColumn.trim()) return;
+    
+    const setState = type === 'llm' ? setLlmUpload : setNormalUpload;
+    setState(prev => ({
+      ...prev,
+      columns: [...prev.columns, newColumn.trim()]
+    }));
+    setNewColumn('');
+  };
+
+  const removeColumn = (type: 'llm' | 'normal', index: number) => {
+    const setState = type === 'llm' ? setLlmUpload : setNormalUpload;
+    setState(prev => ({
+      ...prev,
+      columns: prev.columns.filter((_, i) => i !== index)
+    }));
+  };
+
+  const toggleColumnInput = (type: 'llm' | 'normal') => {
+    const setState = type === 'llm' ? setLlmUpload : setNormalUpload;
+    setState(prev => ({
+      ...prev,
+      showColumnInput: !prev.showColumnInput
+    }));
+  };
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Replace with your email collection API
@@ -83,6 +122,67 @@ function App() {
       <h3 className="text-2xl font-bold text-gray-900 mb-4">{title}</h3>
       <p className="text-gray-600 mb-6">{description}</p>
       
+      {/* Column Specification for AI-Powered Conversion */}
+      {type === 'llm' && (
+        <div className="mb-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="font-semibold text-gray-900">Specify Columns (Optional)</h4>
+            <button
+              onClick={() => toggleColumnInput(type)}
+              className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+            >
+              {state.showColumnInput ? 'Hide' : 'Add Columns'}
+            </button>
+          </div>
+          
+          {state.showColumnInput && (
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newColumn}
+                  onChange={(e) => setNewColumn(e.target.value)}
+                  placeholder="e.g., Date, Amount, Description"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  onKeyPress={(e) => e.key === 'Enter' && addColumn(type)}
+                />
+                <button
+                  onClick={() => addColumn(type)}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Add
+                </button>
+              </div>
+              <p className="text-xs text-gray-500">
+                Specify column names you want to extract (e.g., "Date", "Amount", "Description", "Balance")
+              </p>
+            </div>
+          )}
+          
+          {state.columns.length > 0 && (
+            <div className="mt-3">
+              <p className="text-sm font-medium text-gray-700 mb-2">Columns to extract:</p>
+              <div className="flex flex-wrap gap-2">
+                {state.columns.map((column, index) => (
+                  <span
+                    key={index}
+                    className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                  >
+                    {column}
+                    <button
+                      onClick={() => removeColumn(type, index)}
+                      className="ml-1 text-blue-600 hover:text-blue-800"
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       <div
         className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 cursor-pointer"
         onClick={() => document.getElementById(`file-${type}`)?.click()}
